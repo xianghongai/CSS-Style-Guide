@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>CSS 开发规范手册</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    code[class*="language-"],
+    pre[class*="language-"] {
+      color: #333;
+      background: none;
+      font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+      text-align: left;
+      white-space: pre;
+      word-spacing: normal;
+      word-break: normal;
+      word-wrap: normal;
+      line-height: 1.4;
+
+      -moz-tab-size: 8;
+      -o-tab-size: 8;
+      tab-size: 8;
+
+      -webkit-hyphens: none;
+      -moz-hyphens: none;
+      -ms-hyphens: none;
+      hyphens: none;
+    }
+
+    /* Code blocks */
+
+    pre[class*="language-"] {
+      padding: .8em;
+      overflow: auto;
+      /* border: 1px solid #ddd; */
+      border-radius: 3px;
+      /* background: #fff; */
+      background: #f5f5f5;
+    }
+
+    /* Inline code */
+
+    :not(pre)>code[class*="language-"] {
+      padding: .1em;
+      border-radius: .3em;
+      white-space: normal;
+      background: #f5f5f5;
+    }
+
+    .token.comment,
+    .token.blockquote {
+      color: #969896;
+    }
+
+    .token.cdata {
+      color: #183691;
+    }
+
+    .token.doctype,
+    .token.punctuation,
+    .token.variable,
+    .token.macro.property {
+      color: #333;
+    }
+
+    .token.operator,
+    .token.important,
+    .token.keyword,
+    .token.rule,
+    .token.builtin {
+      color: #a71d5d;
+    }
+
+    .token.string,
+    .token.url,
+    .token.regex,
+    .token.attr-value {
+      color: #183691;
+    }
+
+    .token.property,
+    .token.number,
+    .token.boolean,
+    .token.entity,
+    .token.atrule,
+    .token.constant,
+    .token.symbol,
+    .token.command,
+    .token.code {
+      color: #0086b3;
+    }
+
+    .token.tag,
+    .token.selector,
+    .token.prolog {
+      color: #63a35c;
+    }
+
+    .token.function,
+    .token.namespace,
+    .token.pseudo-element,
+    .token.class,
+    .token.class-name,
+    .token.pseudo-class,
+    .token.id,
+    .token.url-reference .token.variable,
+    .token.attr-name {
+      color: #795da3;
+    }
+
+    .token.entity {
+      cursor: help;
+    }
+
+    .token.title,
+    .token.title .token.punctuation {
+      font-weight: bold;
+      color: #1d3e81;
+    }
+
+    .token.list {
+      color: #ed6a43;
+    }
+
+    .token.inserted {
+      background-color: #eaffea;
+      color: #55a532;
+    }
+
+    .token.deleted {
+      background-color: #ffecec;
+      color: #bd2c00;
+    }
+
+    .token.bold {
+      font-weight: bold;
+    }
+
+    .token.italic {
+      font-style: italic;
+    }
+
+
+    /* JSON */
+
+    .language-json .token.property {
+      color: #183691;
+    }
+
+    .language-markup .token.tag .token.punctuation {
+      color: #333;
+    }
+
+    /* CSS */
+
+    code.language-css,
+    .language-css .token.function {
+      color: #0086b3;
+    }
+
+    /* YAML */
+
+    .language-yaml .token.atrule {
+      color: #63a35c;
+    }
+
+    code.language-yaml {
+      color: #183691;
+    }
+
+    /* Ruby */
+
+    .language-ruby .token.function {
+      color: #333;
+    }
+
+    /* Markdown */
+
+    .language-markdown .token.url {
+      color: #795da3;
+    }
+
+    /* Makefile */
+
+    .language-makefile .token.symbol {
+      color: #795da3;
+    }
+
+    .language-makefile .token.variable {
+      color: #183691;
+    }
+
+    .language-makefile .token.builtin {
+      color: #0086b3;
+    }
+
+    /* Bash */
+
+    .language-bash .token.keyword {
+      color: #0086b3;
+    }
+
+    html body {
+      font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      color: #333;
+      background-color: #fff;
+      overflow: initial;
+      box-sizing: border-box;
+      word-wrap: break-word
+    }
+
+    html body>:first-child {
+      margin-top: 0
+    }
+
+    html body h1,
+    html body h2,
+    html body h3,
+    html body h4,
+    html body h5,
+    html body h6 {
+      line-height: 1.2;
+      margin-top: 1em;
+      margin-bottom: 16px;
+      color: #000
+    }
+
+    html body h1 {
+      font-size: 2.25em;
+      font-weight: 300;
+      padding-bottom: .3em
+    }
+
+    html body h2 {
+      font-size: 1.75em;
+      font-weight: 400;
+      padding-bottom: .3em
+    }
+
+    html body h3 {
+      font-size: 1.5em;
+      font-weight: 500
+    }
+
+    html body h4 {
+      font-size: 1.25em;
+      font-weight: 600
+    }
+
+    html body h5 {
+      font-size: 1.1em;
+      font-weight: 600
+    }
+
+    html body h6 {
+      font-size: 1em;
+      font-weight: 600
+    }
+
+    html body h1,
+    html body h2,
+    html body h3,
+    html body h4,
+    html body h5 {
+      font-weight: 600
+    }
+
+    html body h5 {
+      font-size: 1em
+    }
+
+    html body h6 {
+      color: #5c5c5c
+    }
+
+    html body strong {
+      color: #000
+    }
+
+    html body del {
+      color: #5c5c5c
+    }
+
+    html body a:not([href]) {
+      color: inherit;
+      text-decoration: none
+    }
+
+    html body a {
+      color: #08c;
+      text-decoration: none
+    }
+
+    html body a:hover {
+      color: #00a3f5;
+      text-decoration: none
+    }
+
+    html body img {
+      max-width: 100%
+    }
+
+    html body>p {
+      margin-top: 0;
+      margin-bottom: 16px;
+      word-wrap: break-word
+    }
+
+    html body>ul,
+    html body>ol {
+      margin-bottom: 16px
+    }
+
+    html body ul,
+    html body ol {
+      padding-left: 2em
+    }
+
+    html body ul.no-list,
+    html body ol.no-list {
+      padding: 0;
+      list-style-type: none
+    }
+
+    html body ul ul,
+    html body ul ol,
+    html body ol ol,
+    html body ol ul {
+      margin-top: 0;
+      margin-bottom: 0
+    }
+
+    html body li {
+      margin-bottom: 0
+    }
+
+    html body li.task-list-item {
+      list-style: none
+    }
+
+    html body li>p {
+      margin-top: 0;
+      margin-bottom: 0
+    }
+
+    html body .task-list-item-checkbox {
+      margin: 0 .2em .25em -1.8em;
+      vertical-align: middle
+    }
+
+    html body .task-list-item-checkbox:hover {
+      cursor: pointer
+    }
+
+    html body blockquote {
+      margin: 16px 0;
+      font-size: inherit;
+      padding: 0 15px;
+      color: #5c5c5c;
+      border-left: 4px solid #d6d6d6
+    }
+
+    html body blockquote>:first-child {
+      margin-top: 0
+    }
+
+    html body blockquote>:last-child {
+      margin-bottom: 0
+    }
+
+    html body hr {
+      height: 4px;
+      margin: 32px 0;
+      background-color: #d6d6d6;
+      border: 0 none
+    }
+
+    html body table {
+      margin: 10px 0 15px 0;
+      border-collapse: collapse;
+      border-spacing: 0;
+      display: block;
+      width: 100%;
+      overflow: auto;
+      word-break: normal;
+      word-break: keep-all
+    }
+
+    html body table th {
+      font-weight: bold;
+      color: #000
+    }
+
+    html body table td,
+    html body table th {
+      border: 1px solid #d6d6d6;
+      padding: 6px 13px
+    }
+
+    html body dl {
+      padding: 0
+    }
+
+    html body dl dt {
+      padding: 0;
+      margin-top: 16px;
+      font-size: 1em;
+      font-style: italic;
+      font-weight: bold
+    }
+
+    html body dl dd {
+      padding: 0 16px;
+      margin-bottom: 16px
+    }
+
+    html body code {
+      font-family: Menlo, Monaco, Consolas, 'Courier New', monospace;
+      font-size: .85em !important;
+      color: #000;
+      background-color: #f0f0f0;
+      border-radius: 3px;
+      padding: .2em 0
+    }
+
+    html body code::before,
+    html body code::after {
+      letter-spacing: -0.2em;
+      content: "\00a0"
+    }
+
+    html body pre>code {
+      padding: 0;
+      margin: 0;
+      font-size: .85em !important;
+      word-break: normal;
+      white-space: pre;
+      background: transparent;
+      border: 0
+    }
+
+    html body .highlight {
+      margin-bottom: 16px
+    }
+
+    html body .highlight pre,
+    html body pre {
+      padding: 1em;
+      overflow: auto;
+      font-size: .85em !important;
+      line-height: 1.45;
+      border: #d6d6d6;
+      border-radius: 3px
+    }
+
+    html body .highlight pre {
+      margin-bottom: 0;
+      word-break: normal
+    }
+
+    html body pre code,
+    html body pre tt {
+      display: inline;
+      max-width: initial;
+      padding: 0;
+      margin: 0;
+      overflow: initial;
+      line-height: inherit;
+      word-wrap: normal;
+      background-color: transparent;
+      border: 0
+    }
+
+    html body pre code:before,
+    html body pre tt:before,
+    html body pre code:after,
+    html body pre tt:after {
+      content: normal
+    }
+
+    html body p,
+    html body blockquote,
+    html body ul,
+    html body ol,
+    html body dl,
+    html body pre {
+      margin-top: 0;
+      margin-bottom: 16px
+    }
+
+    html body kbd {
+      color: #000;
+      border: 1px solid #d6d6d6;
+      border-bottom: 2px solid #c7c7c7;
+      padding: 2px 4px;
+      background-color: #f0f0f0;
+      border-radius: 3px
+    }
+
+    @media print {
+      html body {
+        background-color: #fff
+      }
+      html body h1,
+      html body h2,
+      html body h3,
+      html body h4,
+      html body h5,
+      html body h6 {
+        color: #000;
+        page-break-after: avoid
+      }
+      html body blockquote {
+        color: #5c5c5c
+      }
+      html body pre {
+        page-break-inside: avoid
+      }
+      html body table {
+        display: table
+      }
+      html body img {
+        display: block;
+        max-width: 100%;
+        max-height: 100%
+      }
+      html body pre,
+      html body code {
+        word-wrap: break-word;
+        white-space: pre
+      }
+    }
+
+    .markdown-preview {
+      width: 100%;
+      height: 100%;
+      box-sizing: border-box
+    }
+
+    .markdown-preview .pagebreak,
+    .markdown-preview .newpage {
+      page-break-before: always
+    }
+
+    .markdown-preview pre.line-numbers {
+      position: relative;
+      padding-left: 3.8em;
+      counter-reset: linenumber
+    }
+
+    .markdown-preview pre.line-numbers>code {
+      position: relative
+    }
+
+    .markdown-preview pre.line-numbers .line-numbers-rows {
+      position: absolute;
+      pointer-events: none;
+      top: 1em;
+      font-size: 100%;
+      left: 0;
+      width: 3em;
+      letter-spacing: -1px;
+      border-right: 1px solid #999;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none
+    }
+
+    .markdown-preview pre.line-numbers .line-numbers-rows>span {
+      pointer-events: none;
+      display: block;
+      counter-increment: linenumber
+    }
+
+    .markdown-preview pre.line-numbers .line-numbers-rows>span:before {
+      content: counter(linenumber);
+      color: #999;
+      display: block;
+      padding-right: .8em;
+      text-align: right
+    }
+
+    .markdown-preview .mathjax-exps .MathJax_Display {
+      text-align: center !important
+    }
+
+    .markdown-preview:not([for="preview"]) .code-chunk .btn-group {
+      display: none
+    }
+
+    .markdown-preview:not([for="preview"]) .code-chunk .status {
+      display: none
+    }
+
+    .markdown-preview:not([for="preview"]) .code-chunk .output-div {
+      margin-bottom: 16px
+    }
+
+    .scrollbar-style::-webkit-scrollbar {
+      width: 8px
+    }
+
+    .scrollbar-style::-webkit-scrollbar-track {
+      border-radius: 10px;
+      background-color: transparent
+    }
+
+    .scrollbar-style::-webkit-scrollbar-thumb {
+      border-radius: 5px;
+      background-color: rgba(150, 150, 150, 0.66);
+      border: 4px solid rgba(150, 150, 150, 0.66);
+      background-clip: content-box
+    }
+
+    html body[for="html-export"]:not([data-presentation-mode]) {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      margin: 0;
+      padding: 0;
+      overflow: auto
+    }
+
+    html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview {
+      position: relative;
+      top: 0
+    }
+
+    @media screen and (min-width:914px) {
+      html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview {
+        padding: 2em calc(50% - 457px)
+      }
+    }
+
+    @media screen and (max-width:914px) {
+      html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview {
+        padding: 2em
+      }
+    }
+
+    @media screen and (max-width:450px) {
+      html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview {
+        font-size: 14px !important;
+        padding: 1em
+      }
+    }
+
+    @media print {
+      html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn {
+        display: none
+      }
+    }
+
+    html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn {
+      position: fixed;
+      bottom: 8px;
+      left: 8px;
+      font-size: 28px;
+      cursor: pointer;
+      color: inherit;
+      z-index: 99;
+      width: 32px;
+      text-align: center;
+      opacity: .4
+    }
+
+    html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn {
+      opacity: 1
+    }
+
+    html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 300px;
+      height: 100%;
+      padding: 32px 0 48px 0;
+      font-size: 14px;
+      box-shadow: 0 0 4px rgba(150, 150, 150, 0.33);
+      box-sizing: border-box;
+      overflow: auto;
+      background-color: inherit
+    }
+
+    html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar {
+      width: 8px
+    }
+
+    html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track {
+      border-radius: 10px;
+      background-color: transparent
+    }
+
+    html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb {
+      border-radius: 5px;
+      background-color: rgba(150, 150, 150, 0.66);
+      border: 4px solid rgba(150, 150, 150, 0.66);
+      background-clip: content-box
+    }
+
+    html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a {
+      text-decoration: none
+    }
+
+    html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul {
+      padding: 0 1.6em;
+      margin-top: .8em
+    }
+
+    html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc li {
+      margin-bottom: .8em
+    }
+
+    html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul {
+      list-style-type: none
+    }
+
+    html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview {
+      left: 300px;
+      width: calc(100% - 300px);
+      padding: 2em calc(50% - 457px - 150px);
+      margin: 0;
+      box-sizing: border-box
+    }
+
+    @media screen and (max-width:1274px) {
+      html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview {
+        padding: 2em
+      }
+    }
+
+    @media screen and (max-width:450px) {
+      html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview {
+        width: 100%
+      }
+    }
+
+    html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview {
+      left: 50%;
+      transform: translateX(-50%)
+    }
+
+    html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc {
+      display: none
+    }
+
+    /* Please visit the URL below for more information: */
+
+    /*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+
+    .md-sidebar-toc {
+      width: 280px !important;
+    }
+
+    .md-sidebar-toc li {
+      white-space: nowrap;
+    }
+
+    pre[data-info="html bad"],
+    pre[data-info="css bad"],
+    pre[data-info="javascript bad"] {
+      border: 1px solid rgba(128, 128, 128, 0.3);
+      background-color: rgba(235, 173, 173, 0.28);
+    }
+
+    pre[data-info="html good"],
+    pre[data-info="css good"],
+    pre[data-info="javascript good"] {
+      border: 1px solid rgba(128, 128, 128, 0.3);
+      background-color: rgba(173, 235, 173, 0.18);
+    }
+
+    .language-text {
+      color: #666 !important;
+    }
+  </style>
+</head>
+
+<body for="html-export">
+  <div class="mume markdown-preview   ">
+    <h1 class="mume-header" id="css-%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83%E6%89%8B%E5%86%8C">CSS 开发规范手册</h1>
+
+    <h2 class="mume-header" id="1-%E8%A7%84%E5%88%99%E5%A3%B0%E6%98%8E">1. 规则声明</h2>
+
+    <pre data-role="codeBlock" data-info="" class="language-"><code>selectorlist {
+  property: value;
+  [more property:value; pairs]
+}
+</code></pre>
+    <p>
+      <code>selector[:pseudo-class] [::pseudo-element] [, more selectorlists]</code>
+    </p>
+    <pre data-role="codeBlock" data-info="" class="language-"><code>&#x9009;&#x62E9;&#x5668; {
+  &#x5C5E;&#x6027;: &#x503C;;
+}
+</code></pre>
+    <h2 class="mume-header" id="2-%E5%87%86%E5%88%99%E4%B8%8E%E6%A0%BC%E5%BC%8F">2. 准则与格式</h2>
+
+    <ul>
+      <li>不使用 ID 选择器</li>
+      <li>避免使用后代选择器</li>
+      <li>避免使用
+        <code>!important</code>
+      </li>
+      <li>使用两个空格作为缩进</li>
+      <li>类名小写使用连字符(
+        <code>kebab-case</code>)代替驼峰法(
+        <code>camelCase</code>)</li>
+      <li>在一个规则声明中应用了多个选择器时，每个选择器独占一行</li>
+      <li>在规则声明的左大括号
+        <code>{</code> 前加上一个空格</li>
+      <li>在属性的冒号
+        <code>:</code> 后面加上一个空格，前面不加空格</li>
+      <li>规则声明的右大括号
+        <code>}</code> 独占一行</li>
+      <li>规则声明之间用空行分隔开</li>
+    </ul>
+    <p>Bad</p>
+    <pre data-role="codeBlock" data-info="css bad" class="language-css"><span class="token selector"><span class="token class">.avatar</span></span><span class="token punctuation">{</span>
+    <span class="token property">border-radius</span><span class="token punctuation">:</span><span class="token number">50%</span><span class="token punctuation">;</span>
+    <span class="token property">border</span><span class="token punctuation">:</span><span class="token number">2</span>px solid white<span class="token punctuation">;</span> <span class="token punctuation">}</span>
+<span class="token selector"><span class="token class">.no</span>, <span class="token class">.nope</span>, <span class="token class">.not_good</span> </span><span class="token punctuation">{</span>
+    // <span class="token number">...</span>
+<span class="token punctuation">}</span>
+<span class="token selector"><span class="token id">#lol-no</span> </span><span class="token punctuation">{</span>
+  // <span class="token number">...</span>
+<span class="token punctuation">}</span>
+</pre>
+    <p>Good</p>
+    <pre data-role="codeBlock" data-info="css good" class="language-css"><span class="token selector"><span class="token class">.avatar</span> </span><span class="token punctuation">{</span>
+  <span class="token property">border-radius</span><span class="token punctuation">:</span> <span class="token number">50%</span><span class="token punctuation">;</span>
+  <span class="token property">border</span><span class="token punctuation">:</span> <span class="token number">2</span>px solid white<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token selector"><span class="token class">.one</span>,
+<span class="token class">.selector</span>,
+<span class="token class">.per-line</span> </span><span class="token punctuation">{</span>
+  // <span class="token number">...</span>
+<span class="token punctuation">}</span>
+</pre>
+    <h2 class="mume-header" id="3-%E6%B3%A8%E9%87%8A">3. 注释</h2>
+
+    <ul>
+      <li>使用行注释 (在 Sass 中是
+        <code>//</code>) 代替块注释。</li>
+      <li>注释独占一行。避免行末注释。</li>
+      <li>给没有自注释的代码写上详细说明，比如：
+        <ul>
+          <li>为什么用到了 z-index</li>
+          <li>兼容性处理或者针对特定浏览器的 hack</li>
+        </ul>
+      </li>
+    </ul>
+    <h2 class="mume-header" id="4-%E6%9E%84%E5%BB%BA-css">4. 构建 CSS</h2>
+
+    <p>组合使用
+      <a href="https://smacss.com/">SMACSS</a>、
+      <a href="https://github.com/stubbornella/oocss/wiki">OOCSS</a> 和
+      <a href="http://getbem.com/naming/">BEM</a>：</p>
+    <ul>
+      <li>理清 CSS 和 HTML 之间清晰且严谨的关系</li>
+      <li>对样式中不同性质部分进行分离</li>
+      <li>创建出可重用、易装配的组件</li>
+      <li>减少嵌套，降低特定性</li>
+      <li>创建可扩展的样式表</li>
+    </ul>
+    <h3 class="mume-header" id="41-smacss">4.1 SMACSS</h3>
+
+    <p>Scalable and Modular Architecture for CSS，</p>
+    <p>构建可扩展和模块化的 CSS，其核心是从页面及交互中的 “Base, Layout, Module, State, Theme” 等角度分离样式。</p>
+    <ul>
+      <li>
+        <code>Base</code> ，最基础的单个元素选择器，设置段落、标题、链接、字体、body 背景等样式；</li>
+      <li>
+        <code>Layout</code> ，划分页面的主干结构、栅格结构；</li>
+      <li>
+        <code>Module</code> ，设定可重复使用的模块化组件；</li>
+      <li>
+        <code>State</code> ，描述布局或模块在特定状态下的特征；</li>
+      <li>
+        <code>Theme</code> ，描述布局或模块的视觉特征。</li>
+    </ul>
+    <h3 class="mume-header" id="42-oocss">4.2 OOCSS</h3>
+
+    <p>Object Oriented CSS，</p>
+    <p>面向对象的CSS，旨在编写可复用、低耦合和可扩展的 CSS 代码。</p>
+    <p>两个主要原则：</p>
+    <ul>
+      <li>结构型样式和视觉特征型样式分离</li>
+      <li>容器型样式和内容型样式分离</li>
+    </ul>
+    <p>Bad</p>
+    <pre data-role="codeBlock" data-info="css bad" class="language-css"><span class="token selector"><span class="token class">.sidebar</span> h3 </span><span class="token punctuation">{</span>
+  <span class="token property">font-family</span><span class="token punctuation">:</span> Arial, Helvetica, sans-serif<span class="token punctuation">;</span>
+  <span class="token property">font-size</span><span class="token punctuation">:</span> <span class="token number">.8</span>em<span class="token punctuation">;</span>
+  <span class="token property">line-height</span><span class="token punctuation">:</span> <span class="token number">1</span><span class="token punctuation">;</span>
+  <span class="token property">color</span><span class="token punctuation">:</span> <span class="token hexcode">#777</span><span class="token punctuation">;</span>
+  <span class="token property">text-shadow</span><span class="token punctuation">:</span> <span class="token function">rgba</span><span class="token punctuation">(</span><span class="token number">0</span>, <span class="token number">0</span>, <span class="token number">0</span>, <span class="token number">.3</span><span class="token punctuation">)</span> <span class="token number">3</span>px <span class="token number">3</span>px <span class="token number">6</span>px<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token selector"><span class="token class">.footer</span> h3 </span><span class="token punctuation">{</span>
+  <span class="token property">font-family</span><span class="token punctuation">:</span> Arial, Helvetica, sans-serif<span class="token punctuation">;</span>
+  <span class="token property">font-size</span><span class="token punctuation">:</span> <span class="token number">2</span>em<span class="token punctuation">;</span>
+  <span class="token property">line-height</span><span class="token punctuation">:</span> <span class="token number">1</span><span class="token punctuation">;</span>
+  <span class="token property">color</span><span class="token punctuation">:</span> <span class="token hexcode">#777</span><span class="token punctuation">;</span>
+  <span class="token property">text-shadow</span><span class="token punctuation">:</span> <span class="token function">rgba</span><span class="token punctuation">(</span><span class="token number">0</span>, <span class="token number">0</span>, <span class="token number">0</span>, <span class="token number">.3</span><span class="token punctuation">)</span> <span class="token number">3</span>px <span class="token number">3</span>px <span class="token number">6</span>px<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</pre>
+    <p>Good</p>
+    <pre data-role="codeBlock" data-info="css good" class="language-css"><span class="token selector"><span class="token class">.title</span> </span><span class="token punctuation">{</span>
+  <span class="token property">font-family</span><span class="token punctuation">:</span> Arial, Helvetica, sans-serif<span class="token punctuation">;</span>
+  <span class="token property">font-size</span><span class="token punctuation">:</span> <span class="token number">2</span>em<span class="token punctuation">;</span>
+  <span class="token property">line-height</span><span class="token punctuation">:</span> <span class="token number">1</span><span class="token punctuation">;</span>
+  <span class="token property">color</span><span class="token punctuation">:</span> <span class="token hexcode">#777</span><span class="token punctuation">;</span>
+  <span class="token property">text-shadow</span><span class="token punctuation">:</span> <span class="token function">rgba</span><span class="token punctuation">(</span><span class="token number">0</span>, <span class="token number">0</span>, <span class="token number">0</span>, <span class="token number">.3</span><span class="token punctuation">)</span> <span class="token number">3</span>px <span class="token number">3</span>px <span class="token number">6</span>px<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token selector"><span class="token class">.footer</span> <span class="token class">.title</span> </span><span class="token punctuation">{</span>
+  <span class="token property">font-size</span><span class="token punctuation">:</span> <span class="token number">1.5</span>em<span class="token punctuation">;</span>
+  <span class="token property">text-shadow</span><span class="token punctuation">:</span> <span class="token function">rgba</span><span class="token punctuation">(</span><span class="token number">0</span>, <span class="token number">0</span>, <span class="token number">0</span>, <span class="token number">.3</span><span class="token punctuation">)</span> <span class="token number">2</span>px <span class="token number">2</span>px <span class="token number">4</span>px<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</pre>
+    <h3 class="mume-header" id="43-bem">4.3 BEM</h3>
+
+    <p>Block-Element-Modifier，</p>
+    <p>命名约定，使前端代码易于阅读和理解，易于使用，容易扩展，更强大和更明确，更严格。</p>
+    <h4 class="mume-header" id="431-%E7%BB%93%E6%9E%84%E6%8B%86%E5%88%86">4.3.1 结构拆分</h4>
+
+    <ul>
+      <li>
+        <code>Block</code> 可独立模块</li>
+      <li>
+        <code>Element</code> 子元素：俩下划线</li>
+      <li>
+        <code>Modifier</code> 模块状态：一个下划线</li>
+      <li>
+        <code>Block</code> 下的所有
+        <code>Element</code> 不考虑层级嵌套关系，扁平化处理都属于
+        <code>Block</code>，即连续的
+        <code>__</code> 下划线只能出现一次</li>
+      <li>复合词、断词使用连字符(中横线)
+        <code>-</code>
+      </li>
+    </ul>
+    <h4 class="mume-header" id="432-%E5%AE%9E%E7%8E%B0">4.3.2 实现</h4>
+
+    <ul>
+      <li>模块：
+        <code>.Block</code>
+      </li>
+      <li>模块_状态：
+        <code>.Block_Modifier</code>
+      </li>
+      <li>模块__子元素：
+        <code>.Block__Element</code>
+      </li>
+      <li>模块__子元素_状态：
+        <code>.Block__Element_Modifier</code>
+      </li>
+    </ul>
+    <pre data-role="codeBlock" data-info="html good" class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>article</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>listing-card listing-card_featured<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h1</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>listing-card__title<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Adorable 2BR in the sunny Mission<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h1</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>listing-card__content<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">></span></span>Vestibulum id ligula porta felis euismod semper.<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>article</span><span class="token punctuation">></span></span>
+</pre>
+    <pre data-role="codeBlock" data-info="css good" class="language-css"><span class="token selector"><span class="token class">.listing-card</span> </span><span class="token punctuation">{</span> <span class="token punctuation">}</span>
+<span class="token selector"><span class="token class">.listing-card_featured</span> </span><span class="token punctuation">{</span> <span class="token punctuation">}</span>
+<span class="token selector"><span class="token class">.listing-card__title</span> </span><span class="token punctuation">{</span> <span class="token punctuation">}</span>
+<span class="token selector"><span class="token class">.listing-card__content</span> </span><span class="token punctuation">{</span> <span class="token punctuation">}</span>
+</pre>
+    <ul>
+      <li>
+        <code>listing-card</code> 是一个块（block），表示高层次的组件。</li>
+      <li>
+        <code>listing-card__title</code> 是一个元素（element），它属于
+        <code>.listing-card</code> 的一部分，因此块是由元素组成的。</li>
+      <li>
+        <code>listing-card_featured</code> 是一个修饰符（modifier），表示这个块与
+        <code>.listing-card</code> 有着不同的状态或者变化。</li>
+    </ul>
+    <h2 class="mume-header" id="5-%E5%91%BD%E5%90%8D">5. 命名</h2>
+
+    <ul>
+      <li>使用功能性的或通用的命名方式</li>
+      <li>避免使用类型选择器限定 Class 名</li>
+      <li>使用名词</li>
+      <li>修饰使用“尺寸等级/颜色层级/形态/状态”之类的形容词</li>
+    </ul>
+    <p>不用
+      <strong>表象的</strong>具体词汇!</p>
+    <p>如：某模块在当前 Theme 下主色是蓝色，字体大小 14px，内外间距 10px，在右边，右对齐，不能以
+      <code>.blue</code>,
+      <code>.f14</code>,
+      <code>.m10</code>,
+      <code>.p10</code>,
+      <code>.right</code>,
+      <code>.text-right</code> 命名；其它 Theme 中可能是别的颜色、尺寸规格、方位和对齐方式。</p>
+    <h2 class="mume-header" id="6-javascript-%E9%92%A9%E5%AD%90">6. JavaScript 钩子</h2>
+
+    <p>避免在 CSS 和 JavaScript 中绑定相同的类。否则开发者在重构时通常会出现以下情况：</p>
+    <ul>
+      <li>浪费时间在 HTML、CSS、JS 三类文件中对照查找每个要改变的类</li>
+      <li>担心破坏功能而不利于作出更改</li>
+    </ul>
+    <p>推荐在创建用于特定 JavaScript 的类名时，添加
+      <code>.js_</code> 前缀，采用
+      <code>.js_lowerCamelCase</code> 命名规则。</p>
+    <pre data-role="codeBlock" data-info="html" class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>btn btn-primary js_requestToBook<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Request to Book<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">></span></span>
+</pre>
+    <h2 class="mume-header" id="7-scss">7. SCSS</h2>
+
+    <h3 class="mume-header" id="71-scss%E5%8F%98%E9%87%8F">7.1 SCSS变量</h3>
+
+    <p>变量名应使用破折号（例如
+      <code>$my-variable</code>），对于仅用在当前文件的变量，在变量名之前添加下划线前缀（例如
+      <code>$_my-variable</code>）。</p>
+    <h3 class="mume-header" id="72-%E5%B5%8C%E5%A5%97%E9%80%89%E6%8B%A9%E5%99%A8">7.2 嵌套选择器</h3>
+
+    <p>不要让嵌套选择器的深度超过 3 层，经 BEM 扁平化处理之后的层级大部分无需嵌套。</p>
+    <pre data-role="codeBlock" data-info="css" class="language-css"><span class="token selector"><span class="token class">.page-container</span> </span><span class="token punctuation">{</span>
+  <span class="token selector"><span class="token class">.content</span> </span><span class="token punctuation">{</span>
+    <span class="token selector"><span class="token class">.profile</span> </span><span class="token punctuation">{</span>
+      // STOP!
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</pre>
+    <h2 class="mume-header" id="8-%E5%B8%B8%E7%94%A8%E5%91%BD%E5%90%8D">8. 常用命名</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align:left">用途</th>
+          <th style="text-align:left">ClassName</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align:left">布局</td>
+          <td style="text-align:left">header, container, footer, aside, row, column, section, wrapper, inner</td>
+        </tr>
+        <tr>
+          <td style="text-align:left">形态</td>
+          <td style="text-align:left">default, primary, secondary, tertiary, accent, muted, light, dark, success, danger, warning, info, sans-serif,
+            serif, monospace</td>
+        </tr>
+        <tr>
+          <td style="text-align:left">等级
+            <sup class="footnote-ref">
+              <a href="#fn1" id="fnref1">[1]</a>
+            </sup>
+          </td>
+          <td style="text-align:left">base, small, normal, regular, medium, large, xlarge, xxlarge, xxxlarge</td>
+        </tr>
+        <tr>
+          <td style="text-align:left">方位
+            <sup class="footnote-ref">
+              <a href="#fn2" id="fnref2">[2]</a>
+            </sup>
+          </td>
+          <td style="text-align:left">top, right, bottom, left, center, vertical, horizontal, reverse, start, end, between, around, baseline, stretch,
+            prev, next, forward, back</td>
+        </tr>
+        <tr>
+          <td style="text-align:left">状态</td>
+          <td style="text-align:left">active, enable, disabled, ready, wait, not started, activate, running, in progress, tested, failed, checked, suspend,
+            resume, delayed, aborted, amending, blocked, canceling, mounted, destroyed, completed</td>
+        </tr>
+        <tr>
+          <td style="text-align:left">操作</td>
+          <td style="text-align:left">create, read, update, delete, insert, edit, remove, verify, switch, off, on, cancel, close, hover, focus</td>
+        </tr>
+        <tr>
+          <td style="text-align:left">组件</td>
+          <td style="text-align:left">module, title, alert, form, button, table, dialog, nav, menu, breadcrumb, pagination, pager, popover, modal, dropdown,
+            tooltip, list, accordion, collapse, tab, panel, carousel, slide, media, card, colorpicker, timepicker, datepicker,
+            datetimepicker, calendar, switch, select, radio, checkbox, transfer, upload, cascader, tree-select, label, badge,
+            avatar, backtop, loading, spin, message, notification, overlay, steps, timeline, progress, scroll, rate, divider,
+            spacer, gallery</td>
+        </tr>
+        <tr>
+          <td style="text-align:left">页面</td>
+          <td style="text-align:left">index, archive, detail, special, contact, search, about, forum</td>
+        </tr>
+        <tr>
+          <td style="text-align:left">其它</td>
+          <td style="text-align:left">timestamp, uniques, item, more, icon</td>
+        </tr>
+      </tbody>
+    </table>
+    <hr class="footnotes-sep">
+    <section class="footnotes">
+      <ol class="footnotes-list">
+        <li id="fn1" class="footnote-item">
+          <p>“等级”名称仅用于 SCSS 变量。
+            <a href="#fnref1" class="footnote-backref">↩︎</a>
+          </p>
+        </li>
+        <li id="fn2" class="footnote-item">
+          <p>不用“方位”命名，极特殊的情况除外。
+            <a href="#fnref2" class="footnote-backref">↩︎</a>
+          </p>
+        </li>
+      </ol>
+    </section>
+
+  </div>
+  <div class="md-sidebar-toc">
+    <ul>
+      <li>
+        <a href="#css-%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83%E6%89%8B%E5%86%8C">CSS 开发规范手册</a>
+        <ul>
+          <li>
+            <a href="#1-%E8%A7%84%E5%88%99%E5%A3%B0%E6%98%8E">1. 规则声明</a>
+          </li>
+          <li>
+            <a href="#2-%E5%87%86%E5%88%99%E4%B8%8E%E6%A0%BC%E5%BC%8F">2. 准则与格式</a>
+          </li>
+          <li>
+            <a href="#3-%E6%B3%A8%E9%87%8A">3. 注释</a>
+          </li>
+          <li>
+            <a href="#4-%E6%9E%84%E5%BB%BA-css">4. 构建 CSS</a>
+            <ul>
+              <li>
+                <a href="#41-smacss">4.1 SMACSS</a>
+              </li>
+              <li>
+                <a href="#42-oocss">4.2 OOCSS</a>
+              </li>
+              <li>
+                <a href="#43-bem">4.3 BEM</a>
+                <ul>
+                  <li>
+                    <a href="#431-%E7%BB%93%E6%9E%84%E6%8B%86%E5%88%86">4.3.1 结构拆分</a>
+                  </li>
+                  <li>
+                    <a href="#432-%E5%AE%9E%E7%8E%B0">4.3.2 实现</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href="#5-%E5%91%BD%E5%90%8D">5. 命名</a>
+          </li>
+          <li>
+            <a href="#6-javascript-%E9%92%A9%E5%AD%90">6. JavaScript 钩子</a>
+          </li>
+          <li>
+            <a href="#7-scss">7. SCSS</a>
+            <ul>
+              <li>
+                <a href="#71-scss%E5%8F%98%E9%87%8F">7.1 SCSS变量</a>
+              </li>
+              <li>
+                <a href="#72-%E5%B5%8C%E5%A5%97%E9%80%89%E6%8B%A9%E5%99%A8">7.2 嵌套选择器</a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href="#8-%E5%B8%B8%E7%94%A8%E5%91%BD%E5%90%8D">8. 常用命名</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <a id="sidebar-toc-btn">≡</a>
+</body>
+<script>
+  document.body.setAttribute('html-show-sidebar-toc', true)
+  var sidebarTOCBtn = document.getElementById('sidebar-toc-btn')
+  sidebarTOCBtn.addEventListener('click', function (event) {
+    event.stopPropagation()
+    if (document.body.hasAttribute('html-show-sidebar-toc')) {
+      document.body.removeAttribute('html-show-sidebar-toc')
+    } else {
+      document.body.setAttribute('html-show-sidebar-toc', true)
+    }
+  })
+</script>
+
+</html>
